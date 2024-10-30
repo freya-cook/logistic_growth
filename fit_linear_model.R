@@ -1,19 +1,25 @@
 #Script to estimate the model parameters using a linear approximation
 
-#library(dplyr)
+install.packages("dplyr")
+library(dplyr)
 
-growth_data <- read.csv("???")
+growth_data <- read.csv("experiment.csv")
 
 #Case 1. K >> N0, t is small
 
-data_subset1 <- growth_data %>% filter(t<???) %>% mutate(N_log = log(N))
+data_subset1 <- growth_data %>% filter(t<1500) %>% mutate(N_log = log(N))
+#from the plot we used K >> N0 when t <1500 
 
 model1 <- lm(N_log ~ t, data_subset1)
 summary(model1)
 
 #Case 2. N(t) = K
 
-data_subset2 <- growth_data %>% filter(t>???)
+data_subset2 <- growth_data %>% filter(t>3000)
+#from the plot we used, n(t) = k at t>3000
 
 model2 <- lm(N ~ 1, data_subset2)
+#N ~ 1 = setting intercept to the value of N provided in the subsetted data (when N=K)
+  #1 is representing the intercept in the model formula
+  #N= 6.000e+10 = k
 summary(model2)
